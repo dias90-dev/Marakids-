@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduVerse — O Universo do Aprendizado</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a1a;
+    --card-bg: #12122a;
+    --accent1: #ff6b35;
+    --accent2: #ffd23f;
+    --accent3: #06d6a0;
+    --accent4: #7b2fff;
+    --accent5: #ff4d8d;
+    --accent6: #00b4d8;
+    --text: #f0f0ff;
+    --glow1: rgba(255,107,53,0.4);
+    --glow2: rgba(123,47,255,0.4);
+    --glow3: rgba(6,214,160,0.4);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* STARS BG */
+  #stars-canvas {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: relative; z-index: 10;
+    background: linear-gradient(135deg, #1a0533 0%, #0d1b4a 50%, #0a2a1a 100%);
+    padding: 0;
+    border-bottom: 3px solid var(--accent4);
+    box-shadow: 0 4px 40px var(--glow2);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-icon {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--accent4), var(--accent5));
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 0 20px var(--glow2);
+    animation: pulse-logo 3s ease-in-out infinite;
+  }
+  @keyframes pulse-logo {
+    0%,100% { box-shadow: 0 0 20px var(--glow2); transform: scale(1); }
+    50% { box-shadow: 0 0 40px var(--glow2); transform: scale(1.05); }
+  }
+  .logo-text h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem; color: #fff;
+    background: linear-gradient(90deg, var(--accent2), var(--accent5), var(--accent6));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .logo-text p { font-size: 0.75rem; color: rgba(255,255,255,0.6); letter-spacing: 2px; text-transform: uppercase; }
+
+  .header-controls { display: flex; align-items: center; gap: 12px; }
+  .sound-toggle {
+    background: rgba(255,255,255,0.1); border: 2px solid var(--accent4);
+    color: #fff; padding: 8px 16px; border-radius: 30px; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem;
+    transition: all 0.3s; display: flex; align-items: center; gap: 6px;
+  }
+  .sound-toggle:hover { background: var(--accent4); box-shadow: 0 0 20px var(--glow2); }
+  .age-selector {
+    background: rgba(255,255,255,0.05); border: 2px solid var(--accent2);
+    color: var(--accent2); padding: 8px 14px; border-radius: 30px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; outline: none;
+  }
+
+  /* HERO BANNER */
+  .hero {
+    position: relative; z-index: 5;
+    background: linear-gradient(135deg, #1a0533 0%, #0d1b4a 60%, #001a2e 100%);
+    padding: 40px 24px 50px;
+    text-align: center; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(123,47,255,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(6,214,160,0.15) 0%, transparent 60%);
+    animation: hero-bg 8s ease-in-out infinite alternate;
+  }
+  @keyframes hero-bg { 0% { transform: scale(1); } 100% { transform: scale(1.1) rotate(3deg); } }
+  .hero-content { position: relative; z-index: 2; }
+  .hero h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    line-height: 1.1; margin-bottom: 12px;
+    background: linear-gradient(90deg, #fff 0%, var(--accent2) 50%, var(--accent5) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 24px; }
+  .hero-stars { display: flex; justify-content: center; gap: 6px; margin-bottom: 24px; }
+  .hero-star { font-size: 1.5rem; animation: star-bounce 1.5s ease-in-out infinite; }
+  .hero-star:nth-child(2) { animation-delay: 0.2s; }
+  .hero-star:nth-child(3) { animation-delay: 0.4s; }
+  .hero-star:nth-child(4) { animation-delay: 0.6s; }
+  .hero-star:nth-child(5) { animation-delay: 0.8s; }
+  @keyframes star-bounce { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.2); } }
+
+  .floating-emojis {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden;
+  }
+  .fem { position: absolute; font-size: 1.5rem; animation: float-em 6s ease-in-out infinite; opacity: 0.3; }
+
+  /* SECTION */
+  .section { position: relative; z-index: 5; padding: 32px 20px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  }
+  .section-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
+    flex-shrink: 0;
+  }
+  .section-header h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem; color: #fff;
+  }
+  .section-header p { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+  /* GAME GRID */
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+
+  .game-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 20px 12px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .game-card::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 18px;
+    background: linear-gradient(135deg, var(--c1, #7b2fff), var(--c2, #ff4d8d));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .game-card:hover { transform: translateY(-6px) scale(1.03); border-color: var(--c1, #7b2fff); box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px var(--c1, #7b2fff); }
+  .game-card:hover::before { opacity: 0.12; }
+  .game-card:active { transform: scale(0.96); }
+
+  .game-icon {
+    font-size: 2.8rem; margin-bottom: 10px; display: block;
+    transition: transform 0.3s;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+  .game-card:hover .game-icon { transform: scale(1.15) rotate(-5deg); }
+
+  .game-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.85rem; font-weight: 700; color: #fff; line-height: 1.3;
+    position: relative; z-index: 1;
+  }
+
+  .game-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--accent1); color: #fff;
+    font-size: 0.55rem; font-weight: 800; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 20px; letter-spacing: 0.5px;
+  }
+  .game-badge.new { background: var(--accent3); }
+  .game-badge.hot { background: var(--accent1); }
+  .game-badge.pro { background: var(--accent4); }
+
+  .difficulty-dots {
+    display: flex; justify-content: center; gap: 4px; margin-top: 8px;
+    position: relative; z-index: 1;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+  .dot.active { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
+
+  /* GAME MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
+    z-index: 1000; display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; animation: modal-in 0.3s ease-out; }
+  @keyframes modal-in { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+  .modal {
+    background: linear-gradient(135deg, #1a0533 0%, #0d1b4a 100%);
+    border-radius: 28px; width: 100%; max-width: 500px;
+    border: 2px solid var(--accent4);
+    box-shadow: 0 0 60px var(--glow2);
+    overflow: hidden; max-height: 90vh; overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(123,47,255,0.3), rgba(255,77,141,0.2));
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .modal-game-icon { font-size: 3rem; }
+  .modal-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.6rem; }
+  .modal-header p { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+
+  .modal-close {
+    margin-left: auto; background: rgba(255,255,255,0.1); border: none;
+    color: #fff; width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .modal-close:hover { background: rgba(255,77,141,0.4); }
+
+  .modal-body { padding: 24px; }
+
+  /* ENGLISH GAME */
+  .english-game { text-align: center; }
+  .word-card {
+    background: linear-gradient(135deg, rgba(123,47,255,0.2), rgba(0,180,216,0.2));
+    border: 2px solid var(--accent4);
+    border-radius: 20px; padding: 32px 20px; margin-bottom: 24px;
+  }
+  .word-emoji { font-size: 5rem; display: block; margin-bottom: 12px; animation: word-pop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes word-pop { from { transform: scale(0) rotate(-10deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+  .english-word {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem; color: var(--accent2); display: block; margin-bottom: 4px;
+  }
+  .phonetic { font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 8px; display: block; }
+  .portuguese-word { font-size: 1.2rem; color: var(--accent3); font-weight: 700; display: block; }
+  .example-sentence { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 8px; font-style: italic; }
+
+  .speak-btn {
+    background: linear-gradient(135deg, var(--accent4), var(--accent5));
+    border: none; color: #fff; padding: 14px 32px; border-radius: 50px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+    transition: all 0.3s; margin: 8px;
+    box-shadow: 0 6px 20px rgba(123,47,255,0.4);
+  }
+  .speak-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(123,47,255,0.5); }
+  .speak-btn.secondary {
+    background: linear-gradient(135deg, var(--accent3), var(--accent6));
+    box-shadow: 0 6px 20px rgba(6,214,160,0.4);
+  }
+
+  .options-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;
+  }
+  .option-btn {
+    background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.15);
+    color: #fff; padding: 14px; border-radius: 14px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .option-btn:hover { border-color: var(--accent4); background: rgba(123,47,255,0.15); transform: scale(1.02); }
+  .option-btn.correct { background: rgba(6,214,160,0.2); border-color: var(--accent3); color: var(--accent3); }
+  .option-btn.wrong { background: rgba(255,107,53,0.2); border-color: var(--accent1); color: var(--accent1); }
+
+  .score-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding: 12px 16px;
+    background: rgba(255,255,255,0.05); border-radius: 14px;
+  }
+  .score-val { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--accent2); }
+  .score-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; flex: 1; margin: 0 16px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent4), var(--accent3)); border-radius: 4px; transition: width 0.5s ease; }
+
+  /* MATH GAME */
+  .math-display {
+    background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,107,53,0.15));
+    border: 2px solid var(--accent2);
+    border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 24px;
+  }
+  .math-problem {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 8vw, 4rem); color: var(--accent2);
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-bottom: 12px;
+  }
+  .math-op { color: var(--accent1); }
+  .math-emoji-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; font-size: 1.8rem; }
+
+  /* COUNTRIES GAME */
+  .country-card {
+    text-align: center; padding: 20px;
+    background: linear-gradient(135deg, rgba(0,180,216,0.15), rgba(6,214,160,0.15));
+    border: 2px solid var(--accent6); border-radius: 20px; margin-bottom: 20px;
+  }
+  .country-flag { font-size: 5rem; display: block; margin-bottom: 12px; }
+  .country-name { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--accent6); }
+  .country-info { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 6px; }
+  .country-facts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+  .fact-chip {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: rgba(255,255,255,0.8);
+  }
+  .fact-chip span { color: var(--accent2); font-weight: 700; }
+
+  /* SHAPES */
+  .shape-display {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(255,255,255,0.05); border-radius: 20px;
+    padding: 30px; margin-bottom: 24px;
+  }
+  .shape-svg { width: 140px; height: 140px; margin-bottom: 20px; }
+  .shape-name { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--accent5); }
+  .shape-en { font-size: 1.2rem; color: var(--accent2); }
+  .shape-props { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; width: 100%; }
+  .prop-item { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 10px; text-align: center; }
+  .prop-val { font-size: 1.4rem; font-weight: 800; color: var(--accent2); }
+  .prop-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* CARS GAME */
+  .car-display {
+    background: linear-gradient(135deg, rgba(255,77,141,0.15), rgba(123,47,255,0.15));
+    border: 2px solid var(--accent5); border-radius: 20px; padding: 24px;
+    text-align: center; margin-bottom: 24px;
+  }
+  .car-icon-big { font-size: 5rem; display: block; margin-bottom: 12px; animation: car-drive 2s ease-in-out infinite; }
+  @keyframes car-drive { 0%,100% { transform: translateX(-5px) rotate(-1deg); } 50% { transform: translateX(5px) rotate(1deg); } }
+  .car-name { font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: var(--accent5); }
+  .car-brand { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+  .car-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .spec-box { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 12px 8px; }
+  .spec-val { font-size: 1.2rem; font-weight: 800; color: var(--accent2); display: block; }
+  .spec-key { font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* MEMORY GAME */
+  .memory-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .memory-card {
+    aspect-ratio: 1; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent4), var(--accent5));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative; transform-style: preserve-3d;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+  .memory-card.flipped { background: rgba(255,255,255,0.1); }
+  .memory-card.matched { background: linear-gradient(135deg, var(--accent3), #00856f); border-color: var(--accent3); animation: match-pulse 0.5s ease; }
+  @keyframes match-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  .card-back { position: absolute; font-size: 1.6rem; }
+  .card-front { opacity: 0; }
+  .memory-card.flipped .card-front { opacity: 1; }
+  .memory-card.flipped .card-back { opacity: 0; }
+
+  /* QUIZ GAME */
+  .quiz-question {
+    background: rgba(255,255,255,0.05); border-radius: 20px;
+    padding: 24px; margin-bottom: 20px; text-align: center;
+  }
+  .quiz-emoji { font-size: 3.5rem; display: block; margin-bottom: 12px; }
+  .quiz-q { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700; line-height: 1.4; }
+
+  /* ALPHABET */
+  .alphabet-card {
+    background: linear-gradient(135deg, var(--accent4), var(--accent5));
+    border-radius: 24px; padding: 30px; text-align: center; margin-bottom: 20px;
+  }
+  .big-letter { font-family: 'Fredoka One', cursive; font-size: 6rem; line-height: 1; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+  .letter-words { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+  .letter-word {
+    background: rgba(255,255,255,0.15); border-radius: 30px; padding: 8px 16px;
+    font-weight: 700; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* COLORS */
+  .color-swatch {
+    width: 120px; height: 120px; border-radius: 50%;
+    margin: 0 auto 20px; position: relative;
+    box-shadow: 0 0 40px var(--swatch-color, #fff);
+    animation: color-pulse 2s ease-in-out infinite;
+  }
+  @keyframes color-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .color-name-big { font-family: 'Fredoka One', cursive; font-size: 2.5rem; text-align: center; }
+  .color-en-name { text-align: center; font-size: 1.2rem; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex; overflow-x: auto; gap: 8px;
+    padding: 16px 20px; background: rgba(0,0,0,0.3);
+    position: sticky; top: 0; z-index: 50;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0; background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6);
+    padding: 8px 16px; border-radius: 30px; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.8rem;
+    transition: all 0.3s; display: flex; align-items: center; gap: 6px;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: linear-gradient(135deg, var(--accent4), var(--accent5));
+    border-color: transparent; color: #fff;
+    box-shadow: 0 4px 20px var(--glow2);
+  }
+
+  /* CELEBRATION */
+  .celebration {
+    position: fixed; inset: 0; z-index: 9999;
+    display: none; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .celebration.show { display: flex; }
+  .celebration-emoji {
+    font-size: 4rem; position: absolute;
+    animation: celebrate 1s ease-out forwards;
+  }
+  @keyframes celebrate {
+    0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-200px) scale(1.5) rotate(360deg); opacity: 0; }
+  }
+
+  /* STREAK */
+  .streak-bar {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px; background: rgba(255,210,63,0.1); border: 1px solid rgba(255,210,63,0.3);
+    border-radius: 14px; margin-bottom: 16px;
+  }
+  .streak-count { font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: var(--accent2); }
+  .streak-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .streak-fire { font-size: 1.5rem; animation: fire-dance 0.8s ease-in-out infinite alternate; }
+  @keyframes fire-dance { from { transform: scale(1) rotate(-5deg); } to { transform: scale(1.2) rotate(5deg); } }
+
+  /* XP BAR */
+  .xp-section {
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .xp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .xp-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .xp-value { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--accent2); }
+  .xp-bar-track { height: 10px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow: hidden; }
+  .xp-bar-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--accent4), var(--accent2)); transition: width 0.8s ease; }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 5;
+    text-align: center; padding: 24px;
+    color: rgba(255,255,255,0.3); font-size: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* FEEDBACK */
+  .feedback-toast {
+    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--accent3); color: #000; font-weight: 800;
+    padding: 14px 28px; border-radius: 50px; z-index: 9999;
+    font-family: 'Nunito', sans-serif; font-size: 1rem;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap;
+  }
+  .feedback-toast.show { transform: translateX(-50%) translateY(0); }
+  .feedback-toast.wrong-toast { background: var(--accent1); color: #fff; }
+
+  @media (max-width: 480px) {
+    .game-grid { grid-template-columns: repeat(2, 1fr); }
+    .memory-grid { grid-template-columns: repeat(4, 1fr); }
+    .options-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .section-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent4), transparent);
+    margin: 8px 0;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🌍</div>
+      <div class="logo-text">
+        <h1>EduVerse</h1>
+        <p>O Universo do Aprendizado</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <select class="age-selector" id="ageRange" onchange="setAgeRange(this.value)">
+        <option value="kids">🧒 5-8 anos</option>
+        <option value="pre">👦 9-12 anos</option>
+        <option value="teen">🧑 13-17 anos</option>
+        <option value="adult" selected>🎓 18-25 anos</option>
+      </select>
+      <button class="sound-toggle" onclick="toggleSound()" id="soundBtn">🔊 Som</button>
+    </div>
+  </div>
+  <!-- XP BAR -->
+  <div class="xp-section">
+    <div class="xp-row">
+      <span class="xp-label">🏅 Nível <span id="playerLevel">1</span></span>
+      <span class="xp-value"><span id="xpValue">0</span> XP</span>
+    </div>
+    <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBar" style="width:0%"></div></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="floating-emojis" id="floatingEmojis"></div>
+  <div class="hero-content">
+    <div class="hero-stars">
+      <span class="hero-star">⭐</span>
+      <span class="hero-star">🌟</span>
+      <span class="hero-star">✨</span>
+      <span class="hero-star">🌟</span>
+      <span class="hero-star">⭐</span>
+    </div>
+    <h2>Aprenda Inglês, Matemática,<br>Países & muito mais!</h2>
+    <p>Jogos interativos com sons, recompensas e desafios para todas as idades. Aprendizado profundo que diverte!</p>
+    <div class="streak-bar">
+      <span class="streak-fire">🔥</span>
+      <span class="streak-count" id="streakCount">0</span>
+      <span class="streak-label">dias de sequência</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs" id="navTabs">
+  <button class="tab-btn active" onclick="filterSection('all', this)">🌍 Todos</button>
+  <button class="tab-btn" onclick="filterSection('english', this)">🇬🇧 Inglês</button>
+  <button class="tab-btn" onclick="filterSection('math', this)">🔢 Matemática</button>
+  <button class="tab-btn" onclick="filterSection('world', this)">🗺️ Países</button>
+  <button class="tab-btn" onclick="filterSection('shapes', this)">🔷 Formas</button>
+  <button class="tab-btn" onclick="filterSection('science', this)">🔬 Ciências</button>
+  <button class="tab-btn" onclick="filterSection('art', this)">🎨 Arte</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- ENGLISH SECTION -->
+  <div class="section" id="sec-english" data-cat="english">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#7b2fff,#ff4d8d)">🇬🇧</div>
+      <div>
+        <h3>Inglês Profundo</h3>
+        <p>Vocabulário · Gramática · Pronúncia · Frases</p>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" style="--c1:#7b2fff;--c2:#ff4d8d" onclick="openGame('vocab')">
+        <span class="game-badge hot">🔥 Popular</span>
+        <span class="game-icon">📚</span>
+        <div class="game-title">Vocabulário<br>& Quiz</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ff4d8d;--c2:#ff6b35" onclick="openGame('alphabet')">
+        <span class="game-badge new">✨ Novo</span>
+        <span class="game-icon">🔤</span>
+        <div class="game-title">Alfabeto<br>Animado</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#00b4d8;--c2:#06d6a0" onclick="openGame('phrases')">
+        <span class="game-icon">💬</span>
+        <div class="game-title">Frases<br>do Dia a Dia</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ffd23f;--c2:#ff6b35" onclick="openGame('colors')">
+        <span class="game-icon">🎨</span>
+        <div class="game-title">Cores em<br>Inglês</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#7b2fff;--c2:#00b4d8" onclick="openGame('numbers_en')">
+        <span class="game-icon">🔢</span>
+        <div class="game-title">Números<br>em Inglês</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#06d6a0;--c2:#00b4d8" onclick="openGame('animals')">
+        <span class="game-badge pro">🏆 Pro</span>
+        <span class="game-icon">🦁</span>
+        <div class="game-title">Animais<br>& Habitat</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot active"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- MATH SECTION -->
+  <div class="section" id="sec-math" data-cat="math">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#ffd23f,#ff6b35)">🔢</div>
+      <div>
+        <h3>Matemática Mágica</h3>
+        <p>Aritmética · Lógica · Geometria · Tabuada</p>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" style="--c1:#ffd23f;--c2:#ff6b35" onclick="openGame('math_add')">
+        <span class="game-badge hot">🔥 Hot</span>
+        <span class="game-icon">➕</span>
+        <div class="game-title">Adição<br>Turbo</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ff6b35;--c2:#ff4d8d" onclick="openGame('math_mult')">
+        <span class="game-icon">✖️</span>
+        <div class="game-title">Tabuada<br>Ninja</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#7b2fff;--c2:#ffd23f" onclick="openGame('shapes')">
+        <span class="game-icon">🔷</span>
+        <div class="game-title">Formas<br>Geométricas</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#06d6a0;--c2:#ffd23f" onclick="openGame('fractions')">
+        <span class="game-badge new">✨ Novo</span>
+        <span class="game-icon">½</span>
+        <div class="game-title">Frações<br>Visuais</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot active"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- WORLD / COUNTRIES -->
+  <div class="section" id="sec-world" data-cat="world">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#00b4d8,#06d6a0)">🌍</div>
+      <div>
+        <h3>Mundo & Países</h3>
+        <p>Capitais · Bandeiras · Culturas · Idiomas</p>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" style="--c1:#00b4d8;--c2:#06d6a0" onclick="openGame('countries')">
+        <span class="game-badge hot">🔥 Hot</span>
+        <span class="game-icon">🗺️</span>
+        <div class="game-title">Países<br>& Capitais</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ffd23f;--c2:#00b4d8" onclick="openGame('flags')">
+        <span class="game-icon">🏳️</span>
+        <div class="game-title">Adivinhe<br>a Bandeira</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ff4d8d;--c2:#7b2fff" onclick="openGame('continents')">
+        <span class="game-icon">🌐</span>
+        <div class="game-title">Continentes<br>& Oceanos</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#06d6a0;--c2:#00b4d8" onclick="openGame('cultures')">
+        <span class="game-badge pro">🏆 Pro</span>
+        <span class="game-icon">🏛️</span>
+        <div class="game-title">Culturas<br>do Mundo</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot active"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CARS & SCIENCE -->
+  <div class="section" id="sec-science" data-cat="science">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#ff4d8d,#ff6b35)">🚗</div>
+      <div>
+        <h3>Carros & Tecnologia</h3>
+        <p>Mecânica · Velocidade · Inovação · Engenharia</p>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" style="--c1:#ff4d8d;--c2:#ff6b35" onclick="openGame('cars')">
+        <span class="game-badge hot">🔥 Hot</span>
+        <span class="game-icon">🏎️</span>
+        <div class="game-title">Carros<br>do Mundo</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#7b2fff;--c2:#ff4d8d" onclick="openGame('memory_animals')">
+        <span class="game-icon">🧠</span>
+        <div class="game-title">Memória<br>Inteligente</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ffd23f;--c2:#ff6b35" onclick="openGame('planets')">
+        <span class="game-badge new">✨ Novo</span>
+        <span class="game-icon">🪐</span>
+        <div class="game-title">Sistema<br>Solar</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot active"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#06d6a0;--c2:#00b4d8" onclick="openGame('body')">
+        <span class="game-icon">🫁</span>
+        <div class="game-title">Corpo<br>Humano</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ART -->
+  <div class="section" id="sec-art" data-cat="art">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#ff6b35,#ffd23f)">🎨</div>
+      <div>
+        <h3>Arte & Criatividade</h3>
+        <p>Música · Desenho · Ritmo · Expressão</p>
+      </div>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" style="--c1:#ffd23f;--c2:#ff6b35" onclick="openGame('music')">
+        <span class="game-badge new">✨ Novo</span>
+        <span class="game-icon">🎵</span>
+        <div class="game-title">Notas<br>Musicais</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="game-card" style="--c1:#ff4d8d;--c2:#7b2fff" onclick="openGame('colors')">
+        <span class="game-icon">🌈</span>
+        <div class="game-title">Cores &<br>Misturas</div>
+        <div class="difficulty-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>EduVerse © 2025 — Aprendizado profundo para todas as idades 🌍✨</footer>
+
+<!-- FEEDBACK TOAST -->
+<div class="feedback-toast" id="feedbackToast">✅ Correto!</div>
+
+<!-- CELEBRATION -->
+<div class="celebration" id="celebration"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="gameModal">
+    <div class="modal-header" id="modalHeader">
+      <span class="modal-game-icon" id="modalIcon">🎮</span>
+      <div>
+        <h2 id="modalTitle">Jogo</h2>
+        <p id="modalSubtitle">Subtítulo</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ============ AUDIO ENGINE ============
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+let soundEnabled = true;
+let bgOscillators = [];
+
+function initAudio() {
+  if (!audioCtx) audioCtx = new AudioCtx();
+}
+
+function playTone(freq, type='sine', duration=0.3, vol=0.15) {
+  if (!soundEnabled || !audioCtx) return;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  o.type = type; o.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  g.gain.setValueAtTime(vol, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  o.start(); o.stop(audioCtx.currentTime + duration);
+}
+
+function playSuccess() {
+  if (!soundEnabled || !audioCtx) return;
+  [523,659,784,1047].forEach((f,i) => setTimeout(()=>playTone(f,'triangle',0.25,0.2), i*80));
+}
+
+function playError() {
+  if (!soundEnabled || !audioCtx) return;
+  playTone(200,'sawtooth',0.4,0.2);
+  setTimeout(()=>playTone(150,'sawtooth',0.3,0.15), 150);
+}
+
+function playClick() {
+  if (!soundEnabled || !audioCtx) return;
+  playTone(800,'sine',0.08,0.1);
+}
+
+function playCardFlip() {
+  if (!soundEnabled || !audioCtx) return;
+  playTone(600,'sine',0.1,0.12);
+  setTimeout(()=>playTone(900,'sine',0.05,0.08), 80);
+}
+
+function playLevelUp() {
+  if (!soundEnabled || !audioCtx) return;
+  [400,500,600,700,900,1200].forEach((f,i)=>setTimeout(()=>playTone(f,'triangle',0.3,0.25),i*60));
+}
+
+function startSuspenseBg() {
+  if (!soundEnabled || !audioCtx) return;
+  stopBg();
+  // Deep ambient drone
+  const freqs = [55, 82.5, 110];
+  freqs.forEach(freq => {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    const f = audioCtx.createBiquadFilter();
+    f.type = 'lowpass'; f.frequency.value = 400;
+    o.connect(f); f.connect(g); g.connect(audioCtx.destination);
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.value = 0.03;
+    o.start();
+    bgOscillators.push({o,g});
+    // Slow LFO modulation
+    const lfo = audioCtx.createOscillator();
+    const lfoG = audioCtx.createGain();
+    lfoG.gain.value = 0.015;
+    lfo.frequency.value = 0.15 + Math.random()*0.1;
+    lfo.connect(lfoG); lfoG.connect(g.gain);
+    lfo.start();
+    bgOscillators.push({o:lfo,g:lfoG});
+  });
+}
+
+function stopBg() {
+  bgOscillators.forEach(({o}) => { try { o.stop(); } catch(e){} });
+  bgOscillators = [];
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Som' : '🔇 Mudo';
+  if (soundEnabled) { initAudio(); startSuspenseBg(); }
+  else stopBg();
+}
+
+// ============ STARS ============
+const canvas = document.getElementById('stars-canvas');
+const ctx2 = canvas.getContext('2d');
+let stars = [];
+
+function initStars() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  stars = Array.from({length:120}, () => ({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*1.5+0.3,
+    speed: Math.random()*0.3+0.1,
+    alpha: Math.random()
+  }));
+}
+
+function drawStars() {
+  ctx2.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.alpha += s.speed * 0.02;
+    const a = (Math.sin(s.alpha)+1)/2 * 0.7 + 0.1;
+    ctx2.beginPath();
+    ctx2.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx2.fillStyle = `rgba(255,255,255,${a})`;
+    ctx2.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+
+window.addEventListener('resize', initStars);
+initStars(); drawStars();
+
+// ============ FLOATING EMOJIS ============
+const femojis = ['🌟','🎓','📚','🚀','💡','🎨','🎵','🌍','🔢','🏆','✨','🎯'];
+const container = document.getElementById('floatingEmojis');
+femojis.forEach((e,i) => {
+  const el = document.createElement('span');
+  el.className='fem'; el.textContent=e;
+  el.style.left = (i * 9 + 2) + '%';
+  el.style.top = (Math.random()*80) + '%';
+  el.style.animationDelay = (i*0.5)+'s';
+  el.style.animationDuration = (5+Math.random()*4)+'s';
+  container.appendChild(el);
+});
+
+// ============ GAME DATA ============
+const VOCAB = [
+  { emoji:'🐶', en:'Dog', pt:'Cachorro', phone:'dɒɡ', cat:'Animals', ex:'The dog runs fast.' },
+  { emoji:'🐱', en:'Cat', pt:'Gato', phone:'kæt', cat:'Animals', ex:'My cat loves fish.' },
+  { emoji:'🌳', en:'Tree', pt:'Árvore', phone:'triː', cat:'Nature', ex:'The tree is very tall.' },
+  { emoji:'🌊', en:'Ocean', pt:'Oceano', phone:'ˈoʊʃən', cat:'Nature', ex:'The ocean is beautiful.' },
+  { emoji:'🍎', en:'Apple', pt:'Maçã', phone:'ˈæpl', cat:'Food', ex:'An apple a day keeps the doctor away.' },
+  { emoji:'🏠', en:'House', pt:'Casa', phone:'haʊs', cat:'Places', ex:'My house is on a hill.' },
+  { emoji:'☀️', en:'Sun', pt:'Sol', phone:'sʌn', cat:'Nature', ex:'The sun rises in the east.' },
+  { emoji:'⭐', en:'Star', pt:'Estrela', phone:'stɑːr', cat:'Space', ex:'Stars shine at night.' },
+  { emoji:'🚗', en:'Car', pt:'Carro', phone:'kɑːr', cat:'Transport', ex:'I drive my car to school.' },
+  { emoji:'✈️', en:'Airplane', pt:'Avião', phone:'ˈɛrpleɪn', cat:'Transport', ex:'The airplane flies high.' },
+  { emoji:'📱', en:'Phone', pt:'Telefone', phone:'foʊn', cat:'Technology', ex:'I call my mom on the phone.' },
+  { emoji:'💻', en:'Computer', pt:'Computador', phone:'kəmˈpjuːtər', cat:'Technology', ex:'I work on a computer.' },
+  { emoji:'🎵', en:'Music', pt:'Música', phone:'ˈmjuːzɪk', cat:'Art', ex:'I love listening to music.' },
+  { emoji:'🎨', en:'Art', pt:'Arte', phone:'ɑːrt', cat:'Art', ex:'Art is a form of expression.' },
+  { emoji:'📖', en:'Book', pt:'Livro', phone:'bʊk', cat:'Education', ex:'I read a good book.' },
+  { emoji:'🏆', en:'Trophy', pt:'Troféu', phone:'ˈtroʊfi', cat:'Sports', ex:'She won the trophy.' },
+  { emoji:'🌙', en:'Moon', pt:'Lua', phone:'muːn', cat:'Space', ex:'The moon shines at night.' },
+  { emoji:'🦁', en:'Lion', pt:'Leão', phone:'ˈlaɪən', cat:'Animals', ex:'The lion is the king of the jungle.' },
+  { emoji:'🐘', en:'Elephant', pt:'Elefante', phone:'ˈɛlɪfənt', cat:'Animals', ex:'Elephants never forget.' },
+  { emoji:'🌺', en:'Flower', pt:'Flor', phone:'ˈflaʊər', cat:'Nature', ex:'The flower smells wonderful.' },
+];
+
+const COUNTRIES = [
+  { flag:'🇧🇷', name:'Brazil', pt:'Brasil', capital:'Brasília', lang:'Portuguese', pop:'215M', area:'8.5M km²', currency:'Real', continent:'South America', food:'🍖 Churrasco', sport:'⚽ Football' },
+  { flag:'🇺🇸', name:'United States', pt:'Estados Unidos', capital:'Washington D.C.', lang:'English', pop:'331M', area:'9.8M km²', currency:'Dollar', continent:'North America', food:'🍔 Burger', sport:'🏈 American Football' },
+  { flag:'🇯🇵', name:'Japan', pt:'Japão', capital:'Tokyo', lang:'Japanese', pop:'125M', area:'378K km²', currency:'Yen', continent:'Asia', food:'🍣 Sushi', sport:'⚔️ Karate' },
+  { flag:'🇫🇷', name:'France', pt:'França', capital:'Paris', lang:'French', pop:'68M', area:'640K km²', currency:'Euro', continent:'Europe', food:'🥐 Croissant', sport:'🚴 Cycling' },
+  { flag:'🇩🇪', name:'Germany', pt:'Alemanha', capital:'Berlin', lang:'German', pop:'84M', area:'357K km²', currency:'Euro', continent:'Europe', food:'🌭 Bratwurst', sport:'⚽ Football' },
+  { flag:'🇨🇳', name:'China', pt:'China', capital:'Beijing', lang:'Mandarin', pop:'1.4B', area:'9.6M km²', currency:'Yuan', continent:'Asia', food:'🥟 Dim Sum', sport:'🏓 Table Tennis' },
+  { flag:'🇮🇹', name:'Italy', pt:'Itália', capital:'Rome', lang:'Italian', pop:'60M', area:'301K km²', currency:'Euro', continent:'Europe', food:'🍕 Pizza', sport:'⚽ Calcio' },
+  { flag:'🇦🇺', name:'Australia', pt:'Austrália', capital:'Canberra', lang:'English', pop:'26M', area:'7.7M km²', currency:'AUD', continent:'Oceania', food:'🦘 Kangaroo', sport:'🏏 Cricket' },
+  { flag:'🇦🇷', name:'Argentina', pt:'Argentina', capital:'Buenos Aires', lang:'Spanish', pop:'46M', area:'2.8M km²', currency:'Peso', continent:'South America', food:'🥩 Asado', sport:'⚽ Football' },
+  { flag:'🇮🇳', name:'India', pt:'Índia', capital:'New Delhi', lang:'Hindi', pop:'1.4B', area:'3.3M km²', currency:'Rupee', continent:'Asia', food:'🍛 Curry', sport:'🏏 Cricket' },
+];
+
+const CARS = [
+  { emoji:'🏎️', name:'Ferrari 488', brand:'Ferrari', country:'🇮🇹 Italy', speed:'330 km/h', hp:'670 HP', year:'2015', color:'#ff0000', fun:'Italian masterpiece of engineering' },
+  { emoji:'🚗', name:'Tesla Model 3', brand:'Tesla', country:'🇺🇸 USA', speed:'261 km/h', hp:'450 HP', year:'2017', color:'#e53935', fun:'Electric revolution — 0 emissions' },
+  { emoji:'🏎️', name:'Lamborghini Huracán', brand:'Lamborghini', country:'🇮🇹 Italy', speed:'325 km/h', hp:'640 HP', year:'2014', color:'#ff6600', fun:'Named after a Spanish fighting bull' },
+  { emoji:'🚙', name:'Toyota Corolla', brand:'Toyota', country:'🇯🇵 Japan', speed:'180 km/h', hp:'130 HP', year:'2019', color:'#1565c0', fun:'World\'s best-selling car ever' },
+  { emoji:'🏎️', name:'Bugatti Chiron', brand:'Bugatti', country:'🇫🇷 France', speed:'420 km/h', hp:'1500 HP', year:'2016', color:'#4a148c', fun:'The fastest production car' },
+  { emoji:'🚗', name:'Ford Mustang', brand:'Ford', country:'🇺🇸 USA', speed:'250 km/h', hp:'460 HP', year:'1964', color:'#ff8f00', fun:'Iconic American muscle car' },
+  { emoji:'🚙', name:'BMW M3', brand:'BMW', country:'🇩🇪 Germany', speed:'280 km/h', hp:'510 HP', year:'2021', color:'#1b5e20', fun:'Ultimate Driving Machine' },
+  { emoji:'🏎️', name:'McLaren 720S', brand:'McLaren', country:'🇬🇧 UK', speed:'341 km/h', hp:'720 HP', year:'2017', color:'#006064', fun:'Carbon fiber monocoque body' },
+  { emoji:'🚗', name:'Porsche 911', brand:'Porsche', country:'🇩🇪 Germany', speed:'310 km/h', hp:'385 HP', year:'1963', color:'#b71c1c', fun:'60 years of pure driving pleasure' },
+  { emoji:'🚙', name:'Volkswagen Golf', brand:'VW', country:'🇩🇪 Germany', speed:'220 km/h', hp:'150 HP', year:'1974', color:'#37474f', fun:'Europe\'s most popular car' },
+];
+
+const SHAPES = [
+  { name:'Círculo', en:'Circle', sides:0, angles:'∞', area:'π×r²', color:'#7b2fff', svg:`<circle cx="70" cy="70" r="55" fill="none" stroke="currentColor" stroke-width="6"/>`, fun:'Perfect symmetry — no corners!' },
+  { name:'Triângulo', en:'Triangle', sides:3, angles:'60°×3=180°', area:'base×h÷2', color:'#ff4d8d', svg:`<polygon points="70,15 125,125 15,125" fill="none" stroke="currentColor" stroke-width="6"/>`, fun:'Strongest shape in engineering' },
+  { name:'Quadrado', en:'Square', sides:4, angles:'90°×4=360°', area:'lado²', color:'#ffd23f', svg:`<rect x="15" y="15" width="110" height="110" fill="none" stroke="currentColor" stroke-width="6"/>`, fun:'4 equal sides and angles' },
+  { name:'Pentágono', en:'Pentagon', sides:5, angles:'108°×5=540°', area:'(5×lado²)÷(4×tan36°)', color:'#06d6a0', svg:`<polygon points="70,12 128,52 108,118 32,118 12,52" fill="none" stroke="currentColor" stroke-width="6"/>`, fun:'Shape of the US Pentagon building!' },
+  { name:'Hexágono', en:'Hexagon', sides:6, angles:'120°×6=720°', area:'(3√3÷2)×lado²', color:'#00b4d8', svg:`<polygon points="70,12 120,40 120,100 70,128 20,100 20,40" fill="none" stroke="currentColor" stroke-width="6"/>`, fun:'Honeybees build perfect hexagons' },
+  { name:'Losango', en:'Rhombus', sides:4, angles:'varies', area:'d1×d2÷2', color:'#ff6b35', svg:`<polygon points="70,12 128,70 70,128 12,70" fill="none" stroke="currentColor" stroke-width="6"/>`, fun:'4 equal sides, angles differ' },
+];
+
+const PLANETS = [
+  { emoji:'🌍', name:'Earth', pt:'Terra', moons:1, dist:'149.6M km', temp:'15°C avg', fun:'Only known planet with life!' },
+  { emoji:'🪐', name:'Saturn', pt:'Saturno', moons:83, dist:'1.4B km', temp:'-178°C', fun:'Its rings are made of ice and rock' },
+  { emoji:'🔴', name:'Mars', pt:'Marte', moons:2, dist:'227.9M km', temp:'-63°C', fun:'Has the tallest volcano in the solar system' },
+  { emoji:'🟡', name:'Jupiter', pt:'Júpiter', moons:95, dist:'778.5M km', temp:'-108°C', fun:'Biggest planet — 1300 Earths fit inside!' },
+  { emoji:'⚪', name:'Venus', pt:'Vênus', moons:0, dist:'108.2M km', temp:'465°C', fun:'Hottest planet despite not being closest' },
+  { emoji:'🔵', name:'Neptune', pt:'Netuno', moons:16, dist:'4.5B km', temp:'-200°C', fun:'Winds reach 2100 km/h!' },
+];
+
+const COLORS_DATA = [
+  { name:'Vermelho', en:'Red', hex:'#ff4444', emoji:'🔴', items:'🍎🌹🚒', mix:'Yellow + Red = Orange' },
+  { name:'Azul', en:'Blue', hex:'#4488ff', emoji:'🔵', items:'🌊🐠💙', mix:'Blue + Red = Purple' },
+  { name:'Verde', en:'Green', hex:'#44cc66', emoji:'🟢', items:'🌿🍀🐸', mix:'Blue + Yellow = Green' },
+  { name:'Amarelo', en:'Yellow', hex:'#ffdd00', emoji:'🟡', items:'☀️🌻🍋', mix:'Red + Yellow = Orange' },
+  { name:'Roxo', en:'Purple', hex:'#9944ff', emoji:'🟣', items:'🍇🌸💜', mix:'Red + Blue = Purple' },
+  { name:'Laranja', en:'Orange', hex:'#ff8800', emoji:'🟠', items:'🍊🎃🦊', mix:'Red + Yellow = Orange' },
+  { name:'Rosa', en:'Pink', hex:'#ff44aa', emoji:'🌸', items:'🌺💗🦩', mix:'Red + White = Pink' },
+  { name:'Preto', en:'Black', hex:'#222244', emoji:'⚫', items:'🎩🐈‍⬛🖤', mix:'All colors mixed = Black' },
+];
+
+const ALPHABET = [
+  { letter:'A', words:[{w:'Apple',e:'🍎'},{w:'Ant',e:'🐜'},{w:'Airplane',e:'✈️'}], sound:'eɪ' },
+  { letter:'B', words:[{w:'Ball',e:'⚽'},{w:'Book',e:'📚'},{w:'Bear',e:'🐻'}], sound:'biː' },
+  { letter:'C', words:[{w:'Cat',e:'🐱'},{w:'Car',e:'🚗'},{w:'Cake',e:'🎂'}], sound:'siː' },
+  { letter:'D', words:[{w:'Dog',e:'🐶'},{w:'Duck',e:'🦆'},{w:'Door',e:'🚪'}], sound:'diː' },
+  { letter:'E', words:[{w:'Elephant',e:'🐘'},{w:'Egg',e:'🥚'},{w:'Earth',e:'🌍'}], sound:'iː' },
+  { letter:'F', words:[{w:'Fish',e:'🐟'},{w:'Flower',e:'🌸'},{w:'Flag',e:'🏴'}], sound:'ɛf' },
+  { letter:'G', words:[{w:'Giraffe',e:'🦒'},{w:'Guitar',e:'🎸'},{w:'Globe',e:'🌍'}], sound:'dʒiː' },
+  { letter:'H', words:[{w:'Horse',e:'🐴'},{w:'House',e:'🏠'},{w:'Hat',e:'🎩'}], sound:'eɪtʃ' },
+];
+
+const PHRASES = [
+  { en:'Good morning!', pt:'Bom dia!', emoji:'☀️', context:'Greeting', use:'Said in the morning (before noon)' },
+  { en:'How are you?', pt:'Como você está?', emoji:'🤝', context:'Greeting', use:'Common way to ask about someone\'s wellbeing' },
+  { en:"I'm fine, thank you!", pt:'Estou bem, obrigado!', emoji:'😊', context:'Response', use:'Polite response to "How are you?"' },
+  { en:"What's your name?", pt:'Qual é o seu nome?', emoji:'🏷️', context:'Introduction', use:'First thing to ask when meeting someone' },
+  { en:'Nice to meet you!', pt:'Prazer em conhecê-lo!', emoji:'🎉', context:'Introduction', use:'Said when meeting someone for the first time' },
+  { en:'Where are you from?', pt:'De onde você é?', emoji:'🌍', context:'Question', use:'Asking about someone\'s country or city' },
+  { en:"I don't understand.", pt:'Não entendo.', emoji:'🤔', context:'Communication', use:'Say this when you need clarification' },
+  { en:'Can you repeat, please?', pt:'Pode repetir, por favor?', emoji:'🔁', context:'Communication', use:'Very important when learning a language!' },
+  { en:'Thank you very much!', pt:'Muito obrigado!', emoji:'🙏', context:'Gratitude', use:'Express deep appreciation' },
+  { en:'See you tomorrow!', pt:'Até amanhã!', emoji:'👋', context:'Farewell', use:'When you\'ll see the person the next day' },
+];
+
+// ============ STATE ============
+let gameState = { score:0, streak:0, xp:0, level:1, currentGame:null, currentIndex:0, memoryFlipped:[], memoryMatched:[], memoryCards:[] };
+
+// ============ XP / LEVEL ============
+function addXP(amount) {
+  gameState.xp += amount;
+  const needed = gameState.level * 100;
+  if (gameState.xp >= needed) {
+    gameState.xp -= needed;
+    gameState.level++;
+    playLevelUp();
+    celebrate(['🏆','⭐','🎉','✨','🚀']);
+    showToast(`🎉 Nível ${gameState.level}! +${amount} XP`, false);
+  } else {
+    showToast(`+${amount} XP`, false);
+  }
+  updateXPBar();
+}
+
+function updateXPBar() {
+  const needed = gameState.level * 100;
+  const pct = (gameState.xp / needed) * 100;
+  document.getElementById('xpBar').style.width = pct + '%';
+  document.getElementById('xpValue').textContent = gameState.xp;
+  document.getElementById('playerLevel').textContent = gameState.level;
+}
+
+// ============ TOAST ============
+function showToast(msg, isWrong=false) {
+  const t = document.getElementById('feedbackToast');
+  t.textContent = msg;
+  t.className = 'feedback-toast' + (isWrong ? ' wrong-toast' : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ============ CELEBRATE ============
+function celebrate(emojis) {
+  const cel = document.getElementById('celebration');
+  cel.innerHTML = '';
+  cel.className = 'celebration show';
+  emojis.forEach((e,i) => {
+    const el = document.createElement('div');
+    el.className = 'celebration-emoji';
+    el.textContent = e;
+    el.style.left = (20 + Math.random()*60) + '%';
+    el.style.bottom = '20%';
+    el.style.animationDelay = (i * 0.12) + 's';
+    cel.appendChild(el);
+  });
+  setTimeout(() => cel.className = 'celebration', 1500);
+}
+
+// ============ MODAL ============
+function closeModalOutside(e) { if(e.target === document.getElementById('modalOverlay')) closeModal(); }
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  gameState.currentGame = null;
+}
+
+function openModal(icon, title, sub, bodyHTML) {
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalSubtitle').textContent = sub;
+  document.getElementById('modalBody').innerHTML = bodyHTML;
+  document.getElementById('modalOverlay').classList.add('active');
+  playClick();
+  initAudio();
+  startSuspenseBg();
+}
+
+// ============ GAMES ============
+function openGame(type) {
+  initAudio();
+  gameState.currentGame = type;
+  gameState.currentIndex = 0;
+
+  switch(type) {
+    case 'vocab': openVocabGame(); break;
+    case 'alphabet': openAlphabetGame(); break;
+    case 'phrases': openPhrasesGame(); break;
+    case 'colors': openColorsGame(); break;
+    case 'numbers_en': openNumbersGame(); break;
+    case 'animals': openAnimalsGame(); break;
+    case 'math_add': openMathGame('add'); break;
+    case 'math_mult': openMathGame('mult'); break;
+    case 'shapes': openShapesGame(); break;
+    case 'fractions': openFractionsGame(); break;
+    case 'countries': openCountriesGame(); break;
+    case 'flags': openFlagsGame(); break;
+    case 'continents': openContinentsGame(); break;
+    case 'cars': openCarsGame(); break;
+    case 'memory_animals': openMemoryGame(); break;
+    case 'planets': openPlanetsGame(); break;
+    case 'body': openBodyGame(); break;
+    case 'music': openMusicGame(); break;
+    case 'cultures': openCulturesGame(); break;
+    default: openVocabGame();
+  }
+}
+
+// ---- VOCAB ----
+let vocabIdx = 0, vocabScore = 0, vocabProgress = 0;
+function openVocabGame() {
+  vocabIdx = Math.floor(Math.random()*VOCAB.length);
+  vocabScore = 0; vocabProgress = 0;
+  renderVocab();
+}
+
+function renderVocab() {
+  const v = VOCAB[vocabIdx];
+  const others = VOCAB.filter((_,i)=>i!==vocabIdx).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others, v].sort(()=>Math.random()-0.5);
+  const progress = Math.min(vocabProgress/10*100,100);
+
+  const html = `
+    <div class="score-bar">
+      <div><div class="score-label">Score</div><div class="score-val">${vocabScore}</div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+      <div><div class="score-label">Rodada</div><div class="score-val">${vocabProgress}/10</div></div>
+    </div>
+    <div class="word-card">
+      <span class="word-emoji">${v.emoji}</span>
+      <span class="english-word">${v.en}</span>
+      <span class="phonetic">/${v.phone}/</span>
+      <span class="example-sentence">"${v.ex}"</span>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">Qual é a tradução em português?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkVocab('${o.pt}','${v.pt}',this)">${o.pt}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="speak-btn secondary" onclick="speakWord('${v.en}')">🔊 Pronunciar</button>
+    </div>
+  `;
+  openModal('📚','Vocabulário & Quiz','Inglês → Português · Escolha a tradução correta',html);
+}
+
+function checkVocab(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    playSuccess(); celebrate(['⭐','✅','🎉']);
+    vocabScore += 10; vocabProgress++;
+    addXP(15);
+    showToast('✅ Correto! +15 XP');
+    setTimeout(() => {
+      vocabIdx = Math.floor(Math.random()*VOCAB.length);
+      if(vocabProgress < 10) renderVocab();
+      else {
+        document.getElementById('modalBody').innerHTML = `<div style="text-align:center;padding:40px"><div style="font-size:4rem">🏆</div><h2 style="font-family:'Fredoka One',cursive;font-size:2rem;margin:16px 0;color:#ffd23f">Parabéns!</h2><p>Pontuação final: <strong>${vocabScore}</strong> pontos</p><br><button class="speak-btn" onclick="openVocabGame()">🔄 Jogar Novamente</button></div>`;
+      }
+    }, 1200);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.option-btn').forEach(b=>{ if(b.textContent===correct) b.classList.add('correct'); });
+    playError();
+    showToast('❌ Errado! Tente na próxima', true);
+    vocabProgress++;
+    setTimeout(()=>{ vocabIdx=Math.floor(Math.random()*VOCAB.length); if(vocabProgress<10) renderVocab(); }, 1500);
+  }
+}
+
+function speakWord(word) {
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.1;
+    window.speechSynthesis.speak(u);
+  }
+  playClick();
+}
+
+// ---- ALPHABET ----
+let alphaIdx = 0;
+function openAlphabetGame() {
+  alphaIdx = 0; renderAlphabet();
+}
+function renderAlphabet() {
+  const a = ALPHABET[alphaIdx % ALPHABET.length];
+  const html = `
+    <div class="alphabet-card">
+      <div class="big-letter">${a.letter}</div>
+      <div style="color:rgba(255,255,255,0.7);font-size:1rem;margin-top:8px">/${a.sound}/</div>
+    </div>
+    <div class="letter-words">
+      ${a.words.map(w=>`<div class="letter-word"><span>${w.e}</span><strong>${w.w}</strong></div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="speakWord('${a.letter}')">🔊 Pronunciar</button>
+      <button class="speak-btn secondary" onclick="alphaIdx++;renderAlphabet()">➡️ Próxima</button>
+    </div>
+  `;
+  openModal('🔤','Alfabeto Animado',`Letra ${a.letter} · ${a.sound}`,html);
+  addXP(5);
+}
+
+// ---- PHRASES ----
+let phraseIdx = 0;
+function openPhrasesGame() {
+  phraseIdx = 0; renderPhrase();
+}
+function renderPhrase() {
+  const p = PHRASES[phraseIdx % PHRASES.length];
+  const html = `
+    <div class="word-card" style="border-color:var(--accent6)">
+      <span style="font-size:4rem;display:block;margin-bottom:12px">${p.emoji}</span>
+      <span class="english-word" style="font-size:1.8rem">${p.en}</span>
+      <span class="portuguese-word" style="margin:12px 0">${p.pt}</span>
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;margin-top:12px">
+        <span style="font-size:0.7rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px">${p.context}</span>
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin-top:4px">${p.use}</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="speakWord('${p.en.replace(/'/g, '')}')">🔊 Ouvir</button>
+      <button class="speak-btn secondary" onclick="phraseIdx++;renderPhrase()">➡️ Próxima</button>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.3);font-size:0.75rem;margin-top:16px">${phraseIdx+1}/${PHRASES.length}</p>
+  `;
+  openModal('💬','Frases do Dia a Dia','Inglês essencial para comunicação real',html);
+}
+
+// ---- COLORS ----
+let colorIdx = 0;
+function openColorsGame() {
+  colorIdx = Math.floor(Math.random()*COLORS_DATA.length); renderColor();
+}
+function renderColor() {
+  const c = COLORS_DATA[colorIdx % COLORS_DATA.length];
+  const others = COLORS_DATA.filter((_,i)=>i!==colorIdx%COLORS_DATA.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,c].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="color-swatch" style="background:${c.hex};--swatch-color:${c.hex}"></div>
+    <div class="color-name-big" style="color:${c.hex}">${c.name}</div>
+    <div class="color-en-name">English: "${c.en}"</div>
+    <div style="text-align:center;font-size:2rem;margin-bottom:16px">${c.items}</div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">Qual é o nome em inglês?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkColor('${o.en}','${c.en}',this)">${o.en}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:12px;font-size:0.8rem;color:rgba(255,255,255,0.4)">💡 ${c.mix}</div>
+  `;
+  openModal('🎨','Cores em Inglês','Aprenda as cores e como misturá-las!',html);
+}
+function checkColor(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🌈','✅','⭐']); addXP(10); showToast('✅ Correto! +10 XP'); setTimeout(()=>{colorIdx++;renderColor();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{colorIdx++;renderColor();},1500); }
+}
+
+// ---- NUMBERS EN ----
+let numIdx = 0;
+const NUMBERS = [
+  {n:1,en:'One'},{n:2,en:'Two'},{n:3,en:'Three'},{n:4,en:'Four'},{n:5,en:'Five'},
+  {n:6,en:'Six'},{n:7,en:'Seven'},{n:8,en:'Eight'},{n:9,en:'Nine'},{n:10,en:'Ten'},
+  {n:11,en:'Eleven'},{n:12,en:'Twelve'},{n:13,en:'Thirteen'},{n:20,en:'Twenty'},
+  {n:50,en:'Fifty'},{n:100,en:'One Hundred'},{n:1000,en:'One Thousand'},
+];
+function openNumbersGame() {
+  numIdx = Math.floor(Math.random()*NUMBERS.length); renderNumber();
+}
+function renderNumber() {
+  const num = NUMBERS[numIdx];
+  const others = NUMBERS.filter((_,i)=>i!==numIdx).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,num].sort(()=>Math.random()-0.5);
+  const emojiBall = '🔵'.repeat(Math.min(num.n, 12));
+  const html = `
+    <div class="math-display">
+      <div class="math-problem">${num.n}</div>
+      <div style="font-size:1.2rem;letter-spacing:4px;margin-top:8px">${emojiBall}</div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">Qual é o número <strong>${num.n}</strong> em inglês?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkNum('${o.en}','${num.en}',this)">${o.en}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="speak-btn secondary" onclick="speakWord('${num.en}')">🔊 Ouvir</button>
+    </div>
+  `;
+  openModal('🔢','Números em Inglês','Aprenda a contar do 1 ao 1000!',html);
+}
+function checkNum(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🔢','✅','⭐']); addXP(10); showToast('✅ Correto! +10 XP'); setTimeout(()=>{numIdx=Math.floor(Math.random()*NUMBERS.length);renderNumber();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{numIdx=Math.floor(Math.random()*NUMBERS.length);renderNumber();},1500); }
+}
+
+// ---- ANIMALS ----
+const ANIMALS_DATA = [
+  {e:'🦁',en:'Lion',pt:'Leão',habitat:'Savanna',diet:'Carnivore',sound:'Roar',fun:'Social cats — live in prides'},
+  {e:'🐘',en:'Elephant',pt:'Elefante',habitat:'Grassland',diet:'Herbivore',sound:'Trumpet',fun:'Largest land animal on Earth'},
+  {e:'🦒',en:'Giraffe',pt:'Girafa',habitat:'Savanna',diet:'Herbivore',sound:'Hum',fun:'Tallest animal — 6 meters!'},
+  {e:'🐬',en:'Dolphin',pt:'Golfinho',habitat:'Ocean',diet:'Carnivore',sound:'Click',fun:'Among the most intelligent animals'},
+  {e:'🦅',en:'Eagle',pt:'Águia',habitat:'Mountains',diet:'Carnivore',sound:'Screech',fun:'Can see 8x better than humans'},
+  {e:'🐆',en:'Cheetah',pt:'Guepardo',habitat:'Savanna',diet:'Carnivore',sound:'Chirp',fun:'Fastest land animal: 120 km/h!'},
+];
+let animalIdx = 0;
+function openAnimalsGame() {
+  animalIdx = Math.floor(Math.random()*ANIMALS_DATA.length); renderAnimal();
+}
+function renderAnimal() {
+  const a = ANIMALS_DATA[animalIdx % ANIMALS_DATA.length];
+  const others = ANIMALS_DATA.filter((_,i)=>i!==animalIdx%ANIMALS_DATA.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,a].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="word-card">
+      <span class="word-emoji">${a.e}</span>
+      <span class="english-word">${a.en}</span>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <span class="fact-chip">🌍 <span>${a.habitat}</span></span>
+        <span class="fact-chip">🍽️ <span>${a.diet}</span></span>
+        <span class="fact-chip">🔊 <span>${a.sound}</span></span>
+      </div>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:12px;font-style:italic">💡 ${a.fun}</p>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">Como se diz em português?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkAnimal('${o.pt}','${a.pt}',this)">${o.pt}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:12px">
+      <button class="speak-btn secondary" onclick="speakWord('${a.en}')">🔊 Pronunciar</button>
+    </div>
+  `;
+  openModal('🦁','Animais & Habitat','Ciências naturais em inglês!',html);
+}
+function checkAnimal(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🦁','✅','🌿']); addXP(15); showToast('✅ Correto! +15 XP'); setTimeout(()=>{animalIdx++;renderAnimal();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{animalIdx++;renderAnimal();},1500); }
+}
+
+// ---- MATH ADD ----
+let mathScore = 0, mathQ = 0;
+function openMathGame(type) {
+  mathScore = 0; mathQ = 0; renderMath(type);
+}
+function renderMath(type) {
+  let a, b, op, res, emojis;
+  if (type === 'add') {
+    a = Math.floor(Math.random()*20)+1; b = Math.floor(Math.random()*20)+1;
+    op = '+'; res = a+b;
+  } else {
+    a = Math.floor(Math.random()*10)+1; b = Math.floor(Math.random()*10)+1;
+    op = '×'; res = a*b;
+  }
+  const wrongs = new Set();
+  while(wrongs.size < 3) { const w = res + Math.floor(Math.random()*10)-5; if(w!==res && w>0) wrongs.add(w); }
+  const opts = [...wrongs, res].sort(()=>Math.random()-0.5);
+  emojis = type==='add' ? '🍎'.repeat(Math.min(a,10)) + (a>10?`+${a-10}`:'')+' + '+'🍊'.repeat(Math.min(b,10)) : '';
+
+  const html = `
+    <div class="score-bar">
+      <div><div class="score-label">Pontos</div><div class="score-val">${mathScore}</div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${mathQ*10}%"></div></div>
+      <div><div class="score-label">Rodada</div><div class="score-val">${mathQ}/10</div></div>
+    </div>
+    <div class="math-display">
+      <div class="math-problem">
+        <span>${a}</span><span class="math-op">${op}</span><span>${b}</span><span class="math-op">=</span><span>?</span>
+      </div>
+      ${type==='add'?`<div class="math-emoji-row">${emojis}</div>`:''}
+    </div>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkMath(${o},${res},this,'${type}')">${o}</button>`).join('')}
+    </div>
+  `;
+  openModal(type==='add'?'➕':'✖️', type==='add'?'Adição Turbo':'Tabuada Ninja', type==='add'?'Soma com frutas visuais!':'Multiplicação rápida!', html);
+}
+function checkMath(chosen, correct, btn, type) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🔢','✅','⭐']); mathScore+=10; mathQ++; addXP(10); showToast('✅ Correto! +10 XP'); setTimeout(()=>{ if(mathQ<10) renderMath(type); else document.getElementById('modalBody').innerHTML=`<div style="text-align:center;padding:40px"><div style="font-size:4rem">🏆</div><h2 style="font-family:'Fredoka One',cursive;font-size:2rem;margin:16px 0;color:#ffd23f">Incrível!</h2><p>Você fez <strong>${mathScore}</strong> pontos!</p><br><button class="speak-btn" onclick="openMathGame('${type}')">🔄 Jogar Novamente</button></div>`; }, 1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(parseInt(b.textContent)===correct)b.classList.add('correct')}); playError(); showToast(`❌ Era ${correct}`, true); mathQ++; setTimeout(()=>{ if(mathQ<10) renderMath(type); }, 1500); }
+}
+
+// ---- SHAPES ----
+let shapeIdx = 0;
+function openShapesGame() {
+  shapeIdx = Math.floor(Math.random()*SHAPES.length); renderShape();
+}
+function renderShape() {
+  const s = SHAPES[shapeIdx % SHAPES.length];
+  const others = SHAPES.filter((_,i)=>i!==shapeIdx%SHAPES.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,s].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="shape-display">
+      <svg class="shape-svg" viewBox="0 0 140 140" style="color:${s.color};filter:drop-shadow(0 0 12px ${s.color})">${s.svg}</svg>
+      <div class="shape-name">${s.name}</div>
+      <div class="shape-en" style="color:${s.color}">${s.en}</div>
+      <div class="shape-props">
+        <div class="prop-item"><div class="prop-val">${s.sides||'∞'}</div><div class="prop-label">Lados</div></div>
+        <div class="prop-item"><div class="prop-val" style="font-size:0.9rem">${s.angles}</div><div class="prop-label">Ângulos</div></div>
+      </div>
+      <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:12px;font-style:italic">💡 ${s.fun}</p>
+    </div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="speakWord('${s.en}')">🔊 Pronunciar</button>
+      <button class="speak-btn secondary" onclick="shapeIdx++;renderShape()">➡️ Próxima</button>
+    </div>
+  `;
+  openModal('🔷','Formas Geométricas','Geometria em português e inglês!',html);
+  addXP(5);
+}
+
+// ---- FRACTIONS ----
+function openFractionsGame() {
+  const fracs = [{n:1,d:2,e:'½'},{n:1,d:3,e:'⅓'},{n:2,d:3,e:'⅔'},{n:1,d:4,e:'¼'},{n:3,d:4,e:'¾'}];
+  const f = fracs[Math.floor(Math.random()*fracs.length)];
+  const pct = Math.round(f.n/f.d*100);
+  const filled = Math.round(f.n/f.d*10);
+  const emojis = '🟦'.repeat(filled)+'⬜'.repeat(10-filled);
+  const html = `
+    <div class="math-display">
+      <div class="math-problem" style="flex-direction:column;gap:0">
+        <span style="font-size:4rem">${f.e}</span>
+        <span style="font-size:1.2rem;color:rgba(255,255,255,0.5)">${f.n}/${f.d}</span>
+      </div>
+      <div style="font-size:1.5rem;letter-spacing:4px;margin-top:12px">${emojis}</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.05);border-radius:14px;padding:16px;text-align:center">
+      <div style="font-family:'Fredoka One',cursive;font-size:2rem;color:var(--accent2)">${pct}%</div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.5)">Em inglês: "<strong>${f.n===1?'one':'two'} ${f.d===2?'half':f.d===3?'third':'quarter'}</strong>"</p>
+      <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:8px">${f.n} parte${f.n>1?'s':''} de ${f.d} iguais</p>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="speak-btn secondary" onclick="openFractionsGame()">➡️ Próxima Fração</button>
+    </div>
+  `;
+  openModal('½','Frações Visuais','Matemática com representação visual!',html);
+  addXP(8);
+}
+
+// ---- COUNTRIES ----
+let countryIdx = 0;
+function openCountriesGame() {
+  countryIdx = Math.floor(Math.random()*COUNTRIES.length); renderCountry();
+}
+function renderCountry() {
+  const c = COUNTRIES[countryIdx % COUNTRIES.length];
+  const others = COUNTRIES.filter((_,i)=>i!==countryIdx%COUNTRIES.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,c].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="country-card">
+      <span class="country-flag">${c.flag}</span>
+      <div class="country-name">${c.name}</div>
+      <div class="country-info">${c.pt} · ${c.continent}</div>
+      <div class="country-facts">
+        <span class="fact-chip">🏛️ <span>${c.capital}</span></span>
+        <span class="fact-chip">👥 <span>${c.pop}</span></span>
+        <span class="fact-chip">🗣️ <span>${c.lang}</span></span>
+        <span class="fact-chip">💰 <span>${c.currency}</span></span>
+        <span class="fact-chip">${c.food}</span>
+        <span class="fact-chip">${c.sport}</span>
+      </div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">Qual é a capital de ${c.name}?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkCountry('${o.capital}','${c.capital}',this)">${o.capital}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:12px">
+      <button class="speak-btn secondary" onclick="speakWord('${c.name}, capital ${c.capital}')">🔊 Ouvir</button>
+    </div>
+  `;
+  openModal('🗺️','Países & Capitais','Conheça o mundo e suas capitais!',html);
+}
+function checkCountry(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🌍','✅','🗺️']); addXP(15); showToast('✅ Correto! +15 XP'); setTimeout(()=>{countryIdx++;renderCountry();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{countryIdx++;renderCountry();},1500); }
+}
+
+// ---- FLAGS ----
+let flagIdx = 0;
+function openFlagsGame() {
+  flagIdx = Math.floor(Math.random()*COUNTRIES.length); renderFlag();
+}
+function renderFlag() {
+  const c = COUNTRIES[flagIdx % COUNTRIES.length];
+  const others = COUNTRIES.filter((_,i)=>i!==flagIdx%COUNTRIES.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,c].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="country-card" style="border-color:var(--accent2)">
+      <span class="country-flag" style="font-size:7rem">${c.flag}</span>
+      <p style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px">De que país é esta bandeira?</p>
+    </div>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkFlag('${o.name}','${c.name}',this)">${o.flag} ${o.name}</button>`).join('')}
+    </div>
+  `;
+  openModal('🏳️','Adivinhe a Bandeira','Você conhece as bandeiras do mundo?',html);
+}
+function checkFlag(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🏳️','✅','🌍']); addXP(12); showToast('✅ Correto! +12 XP'); setTimeout(()=>{flagIdx++;renderFlag();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent.includes(correct))b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{flagIdx++;renderFlag();},1500); }
+}
+
+// ---- CONTINENTS ----
+const CONTINENTS = [
+  {name:'Africa',pt:'África',emoji:'🌍',countries:54,area:'30.4M km²',pop:'1.4B',fact:'Largest number of countries'},
+  {name:'Asia',pt:'Ásia',emoji:'🌏',countries:49,area:'44.6M km²',pop:'4.7B',fact:'Most populated continent'},
+  {name:'Europe',pt:'Europa',emoji:'🌍',countries:44,area:'10.5M km²',pop:'748M',fact:'Smallest populated continent'},
+  {name:'North America',pt:'América do Norte',emoji:'🌎',countries:23,area:'24.7M km²',pop:'600M',fact:'Home to the world\'s largest lake'},
+  {name:'South America',pt:'América do Sul',emoji:'🌎',countries:12,area:'17.8M km²',pop:'440M',fact:'Has the Amazon — world\'s largest rainforest'},
+  {name:'Oceania',pt:'Oceania',emoji:'🌏',countries:14,area:'8.5M km²',pop:'43M',fact:'Smallest continent by population'},
+];
+let contIdx = 0;
+function openContinentsGame() {
+  contIdx = 0; renderContinent();
+}
+function renderContinent() {
+  const c = CONTINENTS[contIdx % CONTINENTS.length];
+  const html = `
+    <div class="country-card" style="border-color:var(--accent3)">
+      <span style="font-size:5rem;display:block;margin-bottom:12px">${c.emoji}</span>
+      <div class="country-name" style="color:var(--accent3)">${c.name}</div>
+      <div class="country-info">${c.pt}</div>
+      <div class="country-facts" style="margin-top:16px">
+        <span class="fact-chip">🏳️ <span>${c.countries} países</span></span>
+        <span class="fact-chip">📏 <span>${c.area}</span></span>
+        <span class="fact-chip">👥 <span>${c.pop}</span></span>
+      </div>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:12px;font-style:italic">💡 ${c.fact}</p>
+    </div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+      <button class="speak-btn" onclick="speakWord('${c.name}')">🔊 Pronunciar</button>
+      <button class="speak-btn secondary" onclick="contIdx++;renderContinent()">➡️ Próximo</button>
+    </div>
+  `;
+  openModal('🌐','Continentes & Oceanos','Explore os 6 continentes do mundo!',html);
+  addXP(5);
+}
+
+// ---- CARS ----
+let carIdx = 0;
+function openCarsGame() {
+  carIdx = Math.floor(Math.random()*CARS.length); renderCar();
+}
+function renderCar() {
+  const c = CARS[carIdx % CARS.length];
+  const others = CARS.filter((_,i)=>i!==carIdx%CARS.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,c].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="car-display">
+      <span class="car-icon-big">${c.emoji}</span>
+      <div class="car-name">${c.name}</div>
+      <div class="car-brand">${c.brand} · ${c.country}</div>
+      <div class="car-specs">
+        <div class="spec-box"><span class="spec-val">${c.speed}</span><span class="spec-key">Top Speed</span></div>
+        <div class="spec-box"><span class="spec-val">${c.hp}</span><span class="spec-key">Power</span></div>
+        <div class="spec-box"><span class="spec-val">${c.year}</span><span class="spec-key">Year</span></div>
+      </div>
+      <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:12px;font-style:italic">💡 ${c.fun}</p>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">De qual país é este carro?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkCar('${o.country}','${c.country}',this)">${o.country}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:12px">
+      <button class="speak-btn secondary" onclick="speakWord('${c.name} by ${c.brand}')">🔊 Ouvir</button>
+    </div>
+  `;
+  openModal('🏎️','Carros do Mundo','Mecânica, velocidade e países em inglês!',html);
+}
+function checkCar(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['🏎️','✅','🏆']); addXP(12); showToast('✅ Correto! +12 XP'); setTimeout(()=>{carIdx++;renderCar();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{carIdx++;renderCar();},1500); }
+}
+
+// ---- MEMORY GAME ----
+const MEM_EMOJIS = ['🦁','🐘','🦒','🐬','🦅','🐆','🦊','🐸'];
+function openMemoryGame() {
+  const pairs = [...MEM_EMOJIS,...MEM_EMOJIS].sort(()=>Math.random()-0.5);
+  gameState.memoryCards = pairs;
+  gameState.memoryFlipped = [];
+  gameState.memoryMatched = [];
+  gameState.memoryLock = false;
+  renderMemoryGame();
+}
+function renderMemoryGame() {
+  const matched = gameState.memoryMatched;
+  const html = `
+    <div style="text-align:center;margin-bottom:16px">
+      <span style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--accent2)">Pares: ${matched.length/2}/${MEM_EMOJIS.length}</span>
+    </div>
+    <div class="memory-grid" id="memGrid">
+      ${gameState.memoryCards.map((e,i)=>`
+        <div class="memory-card ${matched.includes(i)?'matched':''}" id="mc${i}" onclick="flipMem(${i},'${e}')">
+          <span class="card-back">⭐</span>
+          <span class="card-front">${e}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="speak-btn secondary" onclick="openMemoryGame()">🔄 Reiniciar</button>
+    </div>
+  `;
+  openModal('🧠','Memória Inteligente','Encontre os pares de animais!',html);
+}
+function flipMem(idx, emoji) {
+  if (gameState.memoryLock) return;
+  if (gameState.memoryFlipped.includes(idx)) return;
+  if (gameState.memoryMatched.includes(idx)) return;
+
+  const card = document.getElementById('mc'+idx);
+  card.classList.add('flipped');
+  playCardFlip();
+  gameState.memoryFlipped.push(idx);
+
+  if (gameState.memoryFlipped.length === 2) {
+    gameState.memoryLock = true;
+    const [i1,i2] = gameState.memoryFlipped;
+    if (gameState.memoryCards[i1] === gameState.memoryCards[i2]) {
+      gameState.memoryMatched.push(i1,i2);
+      gameState.memoryFlipped = [];
+      gameState.memoryLock = false;
+      playSuccess(); addXP(20);
+      document.getElementById('mc'+i1).classList.add('matched');
+      document.getElementById('mc'+i2).classList.add('matched');
+      if (gameState.memoryMatched.length === gameState.memoryCards.length) {
+        celebrate(['🧠','🏆','⭐','🎉','✨']);
+        setTimeout(()=>{ document.getElementById('modalBody').innerHTML=`<div style="text-align:center;padding:40px"><div style="font-size:4rem">🧠</div><h2 style="font-family:'Fredoka One',cursive;font-size:2rem;margin:16px 0;color:#ffd23f">Memória Perfeita!</h2><p>Você encontrou todos os pares!</p><br><button class="speak-btn" onclick="openMemoryGame()">🔄 Jogar Novamente</button></div>`; }, 500);
+      }
+    } else {
+      setTimeout(()=>{
+        document.getElementById('mc'+i1).classList.remove('flipped');
+        document.getElementById('mc'+i2).classList.remove('flipped');
+        gameState.memoryFlipped = [];
+        gameState.memoryLock = false;
+        playError();
+      }, 1000);
+    }
+  }
+}
+
+// ---- PLANETS ----
+let planetIdx = 0;
+function openPlanetsGame() {
+  planetIdx = 0; renderPlanet();
+}
+function renderPlanet() {
+  const p = PLANETS[planetIdx % PLANETS.length];
+  const html = `
+    <div class="word-card" style="border-color:var(--accent4)">
+      <span class="word-emoji" style="font-size:5rem">${p.emoji}</span>
+      <span class="english-word">${p.name}</span>
+      <span class="portuguese-word">${p.pt}</span>
+      <div class="country-facts" style="margin-top:16px">
+        <span class="fact-chip">🌕 <span>${p.moons} lua${p.moons!==1?'s':''}</span></span>
+        <span class="fact-chip">📏 <span>${p.dist}</span></span>
+        <span class="fact-chip">🌡️ <span>${p.temp}</span></span>
+      </div>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:12px;font-style:italic">💡 ${p.fun}</p>
+    </div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+      <button class="speak-btn" onclick="speakWord('${p.name}')">🔊 Pronunciar</button>
+      <button class="speak-btn secondary" onclick="planetIdx++;renderPlanet()">➡️ Próximo Planeta</button>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.3);font-size:0.75rem;margin-top:12px">${planetIdx+1}/${PLANETS.length} planetas</p>
+  `;
+  openModal('🪐','Sistema Solar','Astronomia em inglês e português!',html);
+  addXP(8);
+}
+
+// ---- BODY ----
+const BODY_PARTS = [
+  {en:'Brain',pt:'Cérebro',emoji:'🧠',fun:'Processes 70,000 thoughts per day'},
+  {en:'Heart',pt:'Coração',emoji:'❤️',fun:'Beats 100,000 times every day'},
+  {en:'Lungs',pt:'Pulmões',emoji:'🫁',fun:'Breathe about 20,000 times per day'},
+  {en:'Eyes',pt:'Olhos',emoji:'👁️',fun:'Can distinguish 10 million colors'},
+  {en:'Bones',pt:'Ossos',emoji:'🦴',fun:'Adult body has 206 bones'},
+  {en:'Muscles',pt:'Músculos',emoji:'💪',fun:'Over 600 muscles in the human body'},
+];
+let bodyIdx = 0;
+function openBodyGame() {
+  bodyIdx = Math.floor(Math.random()*BODY_PARTS.length); renderBody();
+}
+function renderBody() {
+  const b = BODY_PARTS[bodyIdx%BODY_PARTS.length];
+  const others = BODY_PARTS.filter((_,i)=>i!==bodyIdx%BODY_PARTS.length).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...others,b].sort(()=>Math.random()-0.5);
+  const html = `
+    <div class="word-card">
+      <span class="word-emoji" style="font-size:5rem">${b.emoji}</span>
+      <span class="english-word">${b.en}</span>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:8px;font-style:italic">💡 ${b.fun}</p>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:12px">Como se diz em português?</p>
+    <div class="options-grid">
+      ${opts.map(o=>`<button class="option-btn" onclick="checkBody('${o.pt}','${b.pt}',this)">${o.pt}</button>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:12px">
+      <button class="speak-btn secondary" onclick="speakWord('${b.en}')">🔊 Pronunciar</button>
+    </div>
+  `;
+  openModal('🫁','Corpo Humano','Anatomia em inglês!',html);
+}
+function checkBody(chosen, correct, btn) {
+  document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+  if(chosen===correct){ btn.classList.add('correct'); playSuccess(); celebrate(['❤️','✅','🧠']); addXP(12); showToast('✅ Correto! +12 XP'); setTimeout(()=>{bodyIdx++;renderBody();},1200); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')}); playError(); showToast('❌ Era '+correct, true); setTimeout(()=>{bodyIdx++;renderBody();},1500); }
+}
+
+// ---- MUSIC ----
+const NOTES = [
+  {note:'Dó',en:'C (Do)',freq:261,color:'#ff4444'},
+  {note:'Ré',en:'D (Re)',freq:293,color:'#ff8800'},
+  {note:'Mi',en:'E (Mi)',freq:329,color:'#ffd23f'},
+  {note:'Fá',en:'F (Fa)',freq:349,color:'#44cc44'},
+  {note:'Sol',en:'G (Sol)',freq:392,color:'#4488ff'},
+  {note:'Lá',en:'A (La)',freq:440,color:'#9944ff'},
+  {note:'Si',en:'B (Ti)',freq:493,color:'#ff44aa'},
+];
+function openMusicGame() {
+  initAudio();
+  const html = `
+    <div style="text-align:center;margin-bottom:20px">
+      <p style="color:rgba(255,255,255,0.6);font-size:0.9rem">Toque cada nota para ouvir e aprender!</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${NOTES.map(n=>`
+        <button onclick="playNote(${n.freq},'${n.note}','${n.en}')" style="
+          background:linear-gradient(135deg,${n.color}44,${n.color}22);
+          border:2px solid ${n.color}; color:#fff; padding:16px 20px; border-radius:14px;
+          font-family:'Fredoka One',cursive; font-size:1.2rem; cursor:pointer;
+          display:flex; align-items:center; justify-content:space-between;
+          transition:all 0.2s;
+        " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <span style="color:${n.color}">${n.note}</span>
+          <span style="font-size:0.85rem;opacity:0.7">${n.en}</span>
+          <span>🔊</span>
+        </button>
+      `).join('')}
+    </div>
+    <div id="noteDisplay" style="text-align:center;margin-top:20px;font-family:'Fredoka One',cursive;font-size:2rem;min-height:50px"></div>
+  `;
+  openModal('🎵','Notas Musicais','Aprenda música em português e inglês!',html);
+}
+function playNote(freq, pt, en) {
+  initAudio();
+  playTone(freq, 'sine', 0.8, 0.3);
+  playTone(freq*2, 'sine', 0.4, 0.1);
+  const d = document.getElementById('noteDisplay');
+  if (d) { d.innerHTML = `<span style="color:var(--accent2)">${pt}</span> <span style="color:rgba(255,255,255,0.4)">·</span> <span style="color:var(--accent3)">${en}</span>`; }
+  if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(en.split(' ')[0]); u.lang='en-US'; window.speechSynthesis.speak(u); }
+  addXP(3);
+}
+
+// ---- CULTURES ----
+function openCulturesGame() {
+  const c = COUNTRIES[Math.floor(Math.random()*COUNTRIES.length)];
+  const html = `
+    <div class="country-card" style="border-color:var(--accent5)">
+      <span class="country-flag" style="font-size:6rem">${c.flag}</span>
+      <div class="country-name" style="color:var(--accent5)">${c.name}</div>
+      <div class="country-info">${c.pt}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+      <div class="spec-box" style="background:rgba(255,77,141,0.1);border:1px solid rgba(255,77,141,0.3);border-radius:12px;padding:14px">
+        <div style="font-size:1.5rem">${c.food}</div>
+        <div class="spec-key" style="margin-top:4px">Culinária</div>
+      </div>
+      <div class="spec-box" style="background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.3);border-radius:12px;padding:14px">
+        <div style="font-size:1.5rem">${c.sport}</div>
+        <div class="spec-key" style="margin-top:4px">Esporte</div>
+      </div>
+      <div class="spec-box" style="background:rgba(123,47,255,0.1);border:1px solid rgba(123,47,255,0.3);border-radius:12px;padding:14px">
+        <div style="font-weight:700;color:var(--accent4)">${c.lang}</div>
+        <div class="spec-key" style="margin-top:4px">Idioma</div>
+      </div>
+      <div class="spec-box" style="background:rgba(255,210,63,0.1);border:1px solid rgba(255,210,63,0.3);border-radius:12px;padding:14px">
+        <div style="font-weight:700;color:var(--accent2)">${c.currency}</div>
+        <div class="spec-key" style="margin-top:4px">Moeda</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="speakWord('${c.name}, capital city ${c.capital}')">🔊 Ouvir</button>
+      <button class="speak-btn secondary" onclick="openCulturesGame()">➡️ Próximo País</button>
+    </div>
+  `;
+  openModal('🏛️','Culturas do Mundo','Idiomas, culinária, esportes e moedas!',html);
+  addXP(10);
+}
+
+// ---- FILTER TABS ----
+function filterSection(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[data-cat]').forEach(sec=>{
+    if(cat==='all'||sec.dataset.cat===cat) sec.style.display='block';
+    else sec.style.display='none';
+  });
+  playClick();
+}
+
+// ---- AGE RANGE ----
+function setAgeRange(val) {
+  playClick();
+  const msgs = {
+    kids:'🧒 Modo Infantil ativado! Jogos mais simples e visuais.',
+    pre:'👦 Modo Pré-teen ativado! Desafios intermediários.',
+    teen:'🧑 Modo Teen ativado! Conteúdo avançado.',
+    adult:'🎓 Modo Adulto ativado! Aprendizado profundo completo.'
+  };
+  showToast(msgs[val]||'');
+}
+
+// ---- INIT ----
+window.addEventListener('load', () => {
+  document.getElementById('streakCount').textContent = Math.floor(Math.random()*7)+1;
+  setTimeout(() => {
+    initAudio();
+    startSuspenseBg();
+  }, 1000);
+});
+</script>
+</body>
+</html>
